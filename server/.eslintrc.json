@@ -1,0 +1,61 @@
+{
+  // 使用するパーサーを指定します。TypeScriptコードを解析するために@typescript-eslint/parserを使用します。
+  "parser": "@typescript-eslint/parser",
+  // 推奨されるルールセットを拡張します。
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript"
+  ],
+  // 環境設定を行います。node環境とES6環境を有効にします。
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  // パーサーオプションを設定します。最新のECMAScriptバージョンを使用し、モジュールソースタイプを指定します。
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  // 使用するプラグインを指定します。
+  "plugins": [
+    "@typescript-eslint",
+    "import"
+  ],
+  "rules": {
+    "no-console": "warn",  // console.logなどのコンソール出力を警告にします。
+    "indent": ["error", 2],  // インデントをスペース2つに統一します。
+    "no-trailing-spaces": "error",  // 行末の余分なスペースを禁止します。
+    "no-multiple-empty-lines": ["error", { "max": 1 }],   // 複数の空行を禁止し、最大1行まで許可します。
+    "camelcase": ["error", { "properties": "never" }],  // プロパティ名のキャメルケースを強制しません。
+    "semi": ["error", "never"],  // セミコロンを禁止します。
+    "quotes": ["error", "single"],   // シングルクォートを強制します。
+    "object-curly-spacing": ["error", "always"],  // オブジェクトの中括弧の内側にスペースを強制します。
+    "@typescript-eslint/type-annotation-spacing": "error",     // TypeScriptの型注釈のスペースを強制します。
+    // インポート順序を強制します。
+    "import/order": [
+      "error",
+      { "groups": ["external", "builtin", ["parent", "sibling", "index"]],
+        "pathGroups": [
+              { "pattern": "../*", "group": "parent" },
+              { "pattern": "./*", "group": "sibling" },
+              { "pattern": "*", "group": "index" }
+          ],
+          "newlines-between": "always",
+          "alphabetize": { "order": "asc" }
+      }
+  ],
+    "eqeqeq": ["error", "always"],   // 厳格な等価演算子を強制します。
+    "no-var": "error",   // varの使用を禁止します。
+    "prefer-const": "error",  // 可能な場合はconstの使用を強制します。
+    "no-unused-vars": ["error", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],   // 未使用の変数を禁止します。
+    "consistent-return": "error",   // 一貫したreturn文を強制します。
+    "no-undef": "error",    // 未定義の変数を禁止します。
+    "no-shadow": "error",   // 変数のシャドウイングを禁止します。
+    "curly": ["error", "all"],   // ブロック文の中括弧を強制します。
+    "arrow-spacing": ["error", { "before": true, "after": true }],   // アロー関数の前後にスペースを強制します。
+    "no-duplicate-imports": "error"   // 重複したインポートを禁止します。
+  }
+}
