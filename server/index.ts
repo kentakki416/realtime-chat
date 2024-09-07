@@ -1,12 +1,7 @@
-import express, { Request, Response } from 'express'
+import { ExpressServer } from './src/4-infrastructure/server/server'
 
-const app = express()
-const port = 8080
-
-app.get('/', (_: Request, res: Response) => {
-  res.send('Hello, Express!')
-})
-
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`)
-})
+(() => {
+  const apiPort = 8080
+  const apiServer = new ExpressServer(apiPort)
+  apiServer.start()
+})()
