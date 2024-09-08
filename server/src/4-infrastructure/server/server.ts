@@ -1,14 +1,17 @@
 import express from 'express'
 
+import type { MongoClient } from '../db/mongo/client'
 import { ExpressRouter } from '../router/router'
 
 export class ExpressServer {
   private _app: express.Express
   private _port: number
+  private _mongoClient: MongoClient
 
-  constructor(port: number) {
+  constructor(port: number, mongoClient: MongoClient) {
     this._app = express()
     this._port = port
+    this._mongoClient = mongoClient
   }
 
   /**
@@ -20,7 +23,7 @@ export class ExpressServer {
       this._app.use(express.urlencoded({ extended: true })) // URLエンコードされたデータをパースするミドルウェア
 
       // ルーティングの設定
-      const router = new ExpressRouter()
+      const router = new ExpressRouter(this._mongoClient)
       this._app.use('/api',router.getRouter())
 
       this._app.listen(this._port, () => {
