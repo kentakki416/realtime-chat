@@ -1,9 +1,12 @@
 import * as mongo from 'mongodb'
 
+import type { PinoLogger } from '../../log/pino/logger'
+
 export class MongoClient {
   private _client: mongo.MongoClient
+  private _logger: PinoLogger
 
-  constructor() {
+  constructor(logger: PinoLogger) {
     let mongoURI = 'mongodb://root:password@localhost:27017'
     if (process.env.NODE_ENV === 'dev') {
       // TODO: 適切なURIを設定
@@ -14,6 +17,7 @@ export class MongoClient {
     }
 
     this._client = new mongo.MongoClient(mongoURI)
+    this._logger = logger
   }
 
   /**
@@ -24,12 +28,12 @@ export class MongoClient {
     for (let i = 0; i < maxRetry; i++) {
       try {
         await this._client.connect()
-        console.log('MongoDB connected')
+        this._logger.info('MongoDB connected')
         break
       } catch(error) {
-        console.error(error)
+        this._logger.error(error as Error)
         if (i === maxRetry - 1) {
-          console.error('MongoDB connection retry limit exceeded')
+          this._logger.error(new Error('MongoDB connection retry limit exceeded'))
           process.exit(1)
         }
         // 5秒待ってリトライ
@@ -44,9 +48,9 @@ export class MongoClient {
   public async disconnect() {
     try {
       await this._client.close()
-      console.log('MongoDB disconnected')
+      this._logger.info('MongoDB disconnected')
     } catch (error) {
-      console.error(error)
+      this._logger.error(error as Error)
     }
   }
 
