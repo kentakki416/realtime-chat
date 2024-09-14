@@ -7,12 +7,14 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
-    "plugin:import/typescript"
+    "plugin:import/typescript",
+    "plugin:jest/recommended"
   ],
   // 環境設定を行います。node環境とES6環境を有効にします。
   "env": {
     "node": true,
-    "es6": true
+    "es6": true,
+    "jest/globals": true
   },
   // パーサーオプションを設定します。最新のECMAScriptバージョンを使用し、モジュールソースタイプを指定します。
   "parserOptions": {
@@ -22,7 +24,8 @@
   // 使用するプラグインを指定します。
   "plugins": [
     "@typescript-eslint",
-    "import"
+    "import",
+    "jest"
   ],
   "rules": {
     "no-console": "warn",  // console.logなどのコンソール出力を警告にします。
