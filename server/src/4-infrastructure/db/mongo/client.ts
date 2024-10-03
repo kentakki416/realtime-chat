@@ -27,6 +27,7 @@ export class MongoClient {
     const maxRetry = 5
     for (let i = 0; i < maxRetry; i++) {
       try {
+        console.log('aaaa')
         await this._client.connect()
         this._logger.info('MongoDB connected')
         break
