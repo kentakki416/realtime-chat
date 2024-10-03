@@ -1,6 +1,8 @@
 import pino from 'pino'
 
-export class PinoLogger {
+import type { ILogger } from '../../../3-adapter/interface/ilogger'
+
+export class PinoLogger implements ILogger {
   private _logger: pino.Logger
 
   constructor() {
@@ -71,9 +73,9 @@ export class PinoLogger {
 
   public error(err: Error, message?: string, ...args: unknown[]): void {
     if (message) {
-      this._logger.error(err, message, ...args)
+      this._logger.error(`${message}\n${err.stack}`, ...args)
     } else {
-      this._logger.error(err.message, ...args)
+      this._logger.error(`${err.message}\n${err.stack}`, ...args)
     }
   }
 }
